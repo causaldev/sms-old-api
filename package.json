@@ -10,7 +10,7 @@
     "format": "prettier --write .",
     "cpFile": "cp -r ./build/public ./",
     "deploy": "npm run cpFile && npm run builder && cd build && npm ci --production",
-    "cp": "cp .env ./build && cp ./public ./build ",
+    "cp": "cp .env ./build && cp -r ./public ./build ",
     "test": "nodemon --ext 'ts' --exec 'clear && NODE_ENV=testing node -r @adonisjs/assembler/build/register japaFile.ts'",
     "test:all": "NODE_ENV=testing node -r @adonisjs/assembler/build/register japaFile.ts"
   },
