@@ -25,7 +25,7 @@ export default class AcademicYearService extends Service<AcademicYear> {
   }
 
   static async getActive() {
-    return AcademicYear.getActiveYear();
+    return (await AcademicYear.getActiveYear()) as AcademicYear;
   }
 
   async setActive(id: string) {

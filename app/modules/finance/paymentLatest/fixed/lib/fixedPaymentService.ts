@@ -4,6 +4,7 @@ import PenaltyFactory from '../../penalty/_lib/penaltyFactory';
 import PenaltyService from '../../penalty/_lib/penaltyService';
 import FixedPayment from '../fixedPayment';
 import { FixedPaymentEditVal } from './fixedPaymentVal';
+import AcademicYearService from 'app/modules/academic/academicYear/academicYearService';
 
 const FixedPaymentService = {
   createFixed: async (data: any) => {
@@ -38,12 +39,17 @@ const FixedPaymentService = {
   },
 
   fixedWithPending: async (id: string) => {
+    const year = await AcademicYearService.getActive();
     const fixed = (
       await FixedPayment.query()
         .preload('fixedPendings', (fixedPendingBuilder) => {
           fixedPendingBuilder
             .preload('student', (studentBuilder) => {
-              studentBuilder.select('id', 'first_name', 'father_name');
+              studentBuilder
+                .preload('gradeStudents', (gsBuilder) => {
+                  gsBuilder.where('academic_year_id', year.id);
+                })
+                .select('id', 'first_name', 'father_name');
             })
             .preload('grade', (gradeBuilder) => {
               gradeBuilder.select('id', 'name');

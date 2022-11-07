@@ -1,3 +1,4 @@
+import AcademicYearService from 'app/modules/academic/academicYear/academicYearService';
 import { parsePage, parsePageSize } from 'app/services/utils/paginationUtils';
 import RecurrentStudentPayment from '../recurrentStudentPayment';
 
@@ -6,12 +7,18 @@ const RecurrentStudentPaymentSearchService = {
     recurrentPaymentId: string,
     searchQuery: Record<string, any>
   ) => {
+    const year = await AcademicYearService.getActive();
+
     const dbQuery = RecurrentStudentPayment.query()
       .where('recurrent_payment_id', recurrentPaymentId)
       .preload('recurrentPaymentChild', (childBuilder) => {
         childBuilder.select('description');
       })
-      .preload('student')
+      .preload('student', (studentBuilder) => {
+        studentBuilder.preload('gradeStudents', (gsBuilder) => {
+          gsBuilder.where('academic_year_id', year.id);
+        });
+      })
       .preload('grade');
 
     if (searchQuery.grade_id) {

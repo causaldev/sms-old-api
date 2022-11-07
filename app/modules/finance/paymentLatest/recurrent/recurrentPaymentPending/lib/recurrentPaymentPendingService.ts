@@ -1,4 +1,5 @@
 import { RequestContract } from '@ioc:Adonis/Core/Request';
+import AcademicYearService from 'app/modules/academic/academicYear/academicYearService';
 import { batchedPromises, transactLocalized } from 'app/services/utils';
 import RecurrentPaymentChild from '../../recurrentPaymentChild/recurrentPaymentChild';
 import RecurrentPaymentPending from '../recurrentPaymentPending';
@@ -12,14 +13,20 @@ const RecurrentPaymentPendingService = {
     return RecurrentPaymentPending.findByOrFail('id', id);
   },
 
-  findByPaymentChild: (paymentChildId: string) => {
+  findByPaymentChild: async (paymentChildId: string) => {
+    const year = await AcademicYearService.getActive();
+
     return RecurrentPaymentPending.query()
       .where('recurrent_payment_child_id', paymentChildId)
       .preload('grade')
       .preload('recurrentPaymentChild', (builder) => {
         builder.select('amount');
       })
-      .preload('student');
+      .preload('student', (studentBuilder) => {
+        studentBuilder.preload('gradeStudents', (gsBuilder) => {
+          gsBuilder.where('academic_year_id', year.id);
+        });
+      });
   },
 
   createPending: async (request: RequestContract) => {
