@@ -8,6 +8,9 @@ const RecurrentStudentPaymentSearchService = {
   ) => {
     const dbQuery = RecurrentStudentPayment.query()
       .where('recurrent_payment_id', recurrentPaymentId)
+      .preload('recurrentPaymentChild', (childBuilder) => {
+        childBuilder.select('description');
+      })
       .preload('student')
       .preload('grade');
 
@@ -19,6 +22,15 @@ const RecurrentStudentPaymentSearchService = {
         studentBuilder
           .where('first_name', 'like', `%${searchQuery.student}%`)
           .orWhere('father_name', 'like', `%${searchQuery.student}%`);
+      });
+    }
+    if (searchQuery.childDescription) {
+      dbQuery.whereHas('recurrentPaymentChild', (childBuilder) => {
+        childBuilder.where(
+          'description',
+          'like',
+          `%${searchQuery.childDescription}%`
+        );
       });
     }
     if (searchQuery.fs) {

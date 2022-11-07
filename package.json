@@ -8,7 +8,7 @@
     "dev": "node ace serve --watch",
     "lint": "eslint . --ext=.ts",
     "format": "prettier --write .",
-    "cpFile": "cp -r ./build/public ./",
+    "cpFile": "cp -r ./build/public/images ./public",
     "deploy": "npm run cpFile && npm run builder && cd build && npm ci --production",
     "cp": "cp .env ./build && cp -r ./public ./build ",
     "test": "nodemon --ext 'ts' --exec 'clear && NODE_ENV=testing node -r @adonisjs/assembler/build/register japaFile.ts'",
