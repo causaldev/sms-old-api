@@ -62,8 +62,8 @@ export default class Student extends Model {
   })
   public profile: HasOne<typeof StudentProfile>;
 
-  @hasMany(() => RegistrationPayment, {
-    foreignKey: 'student_id',
-  })
-  public registrationPayments: HasMany<typeof RegistrationPayment>;
+  // @hasMany(() => RegistrationPayment, {
+  //   foreignKey: 'student_id',
+  // })
+  // public registrationPayments: HasMany<typeof RegistrationPayment>;
 }

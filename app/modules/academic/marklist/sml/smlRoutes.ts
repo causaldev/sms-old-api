@@ -6,7 +6,7 @@ export default () => {
     Route.post(
       '/',
       '/app/modules/academic/marklist/sml/smlController.store'
-    ).middleware([getAuthGuard(), 'can:add-sml']);
+    ).middleware([getAuthGuard()]);
 
     Route.post(
       '/search',

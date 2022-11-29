@@ -6,12 +6,12 @@ export default () => {
     Route.get(
       '/grade/:gradeId',
       '/app/modules/academic/marklist/cst/cstController.getGrade'
-    ).middleware([getAuthGuard(), 'can:view-cst']);
+    ).middleware([getAuthGuard()]);
 
     Route.get(
       '/:cstId/quarter/:quarterId',
       '/app/modules/academic/marklist/cst/cstController.getQuarter'
-    ).middleware([getAuthGuard(), 'can:view-cst']);
+    ).middleware([getAuthGuard()]);
 
     Route.post(
       '/',

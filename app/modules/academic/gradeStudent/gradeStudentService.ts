@@ -182,9 +182,6 @@ export default class GradeStudentService extends Service<GradeStudent> {
       .whereHas('gradeStudents', (gsBuilder) => {
         gsBuilder.where('academic_year_id', year.id).where('grade_id', gradeId);
       })
-      .whereHas('registrationPayments', (regBuilder) => {
-        regBuilder.where('academic_year_id', year.id);
-      })
       .preload('gradeStudents', (gsBuilder) => {
         gsBuilder.where('academic_year_id', year.id).where('grade_id', gradeId);
       })
@@ -199,12 +196,10 @@ export default class GradeStudentService extends Service<GradeStudent> {
         gsBuilder
           .where('academic_year_id', year.id)
           .where('grade_id', gradeId)
+          .where('active', true)
           .whereHas('student', (studentBuilder) => {
             studentBuilder.where('status', StudentStatus.Active);
           });
-      })
-      .whereHas('registrationPayments', (regBuilder) => {
-        regBuilder.where('academic_year_id', year.id);
       })
       .preload('gradeStudents', (gsBuilder) => {
         gsBuilder.where('academic_year_id', year.id).where('grade_id', gradeId);
@@ -224,9 +219,6 @@ export default class GradeStudentService extends Service<GradeStudent> {
             studentBuilder.where('status', StudentStatus.Inactive);
           });
       })
-      .whereHas('registrationPayments', (regBuilder) => {
-        regBuilder.where('academic_year_id', year.id);
-      })
       .preload('gradeStudents', (gsBuilder) => {
         gsBuilder.where('academic_year_id', year.id).where('grade_id', gradeId);
       })
@@ -240,11 +232,7 @@ export default class GradeStudentService extends Service<GradeStudent> {
 
     const gradeStudents = await GradeStudent.query()
       .whereHas('student', (studentBuilder) => {
-        studentBuilder
-          .whereHas('registrationPayments', (regBuilder) => {
-            regBuilder.where('academic_year_id', yearId!);
-          })
-          .where('status', StudentStatus.Active);
+        studentBuilder.where('status', StudentStatus.Active);
       })
       .where('academic_year_id', yearId!)
       .where('grade_id', gradeId);

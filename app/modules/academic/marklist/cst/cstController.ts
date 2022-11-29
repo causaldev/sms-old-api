@@ -36,6 +36,6 @@ export default class CstController extends ApiController<Cst> {
         cst.grade_id
       );
 
-    return response.json({ quarter, cst, students });
+    return response.json({ students, quarter, cst });
   }
 }

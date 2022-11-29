@@ -7,9 +7,10 @@ export default class EvaluationTypeRepo extends Repo<EvaluationType> {
   }
 
   async findAll() {
-    return (await this.model
-      .query()
-      .orderBy('name', 'asc')) as EvaluationType[];
+    return (await EvaluationType.query().orderBy(
+      'name',
+      'asc'
+    )) as EvaluationType[];
   }
 
   async totals100(evalTypeIds: string[]) {

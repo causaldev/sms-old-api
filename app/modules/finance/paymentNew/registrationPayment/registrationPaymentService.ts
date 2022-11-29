@@ -24,9 +24,9 @@ export default class RegistrationPaymentService extends Service<RegistrationPaym
   async listRegisteredGrade(gradeId: string) {
     const year = await AcademicYearService.getActive();
     const students = await Student.query()
-      .whereHas('registrationPayments', (regBuilder) => {
-        regBuilder.where('academic_year_id', year.id);
-      })
+      // .whereHas('registrationPayments', (regBuilder) => {
+      //   regBuilder.where('academic_year_id', year.id);
+      // })
       .whereHas('gradeStudents', (gsBuilder) => {
         gsBuilder.where('academic_year_id', year.id).where('grade_id', gradeId);
       })
@@ -38,9 +38,9 @@ export default class RegistrationPaymentService extends Service<RegistrationPaym
   async listNonRegisteredByGrade(gradeId: string) {
     const year = await AcademicYearService.getActive();
     const students = await Student.query()
-      .whereDoesntHave('registrationPayments', (regBuilder) => {
-        regBuilder.where('academic_year_id', year.id);
-      })
+      // .whereDoesntHave('registrationPayments', (regBuilder) => {
+      //   regBuilder.where('academic_year_id', year.id);
+      // })
       .whereHas('gradeStudents', (gsBuilder) => {
         gsBuilder.where('academic_year_id', year.id).where('grade_id', gradeId);
       })
