@@ -6,7 +6,6 @@ import {
   HasOne,
 } from '@ioc:Adonis/Lucid/Orm';
 import Payment from 'app/modules/finance/payment/payment';
-import RegistrationPayment from 'app/modules/finance/paymentNew/registrationPayment/registrationPayment';
 import Model from 'app/modules/_shared/model';
 import { Gender } from 'app/modules/_shared/types';
 import { DateTime } from 'luxon';
