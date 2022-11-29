@@ -10,6 +10,6 @@ export default class ImageController {
       return response.download(Application.publicPath(img_path));
     }
 
-    return response.status(4040).json({ message: 'Image not found' });
+    return response.status(404).json({ message: 'Image not found' });
   }
 }
