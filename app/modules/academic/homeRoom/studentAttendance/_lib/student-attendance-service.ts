@@ -69,7 +69,6 @@ const StudentAttendanceService = {
   fetchGradeDateAttendance: async (gradeId: string, date: string) => {
     const year = await AcademicYearService.getActive();
 
-    // TODO: Move to service file
     const studentIds = (
       await GradeStudent.query()
         .where('academic_year_id', year.id)

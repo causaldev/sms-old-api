@@ -53,10 +53,14 @@ export const convertToEthiopianRaw = (date: string) => {
     year: convertedYear,
     month: convertedMonth,
     date: convertedDay,
-  } = zemen.toEC(parseInt(year, 10), parseInt(month, 10), parseInt(day, 10));
+  } = zemen.toEC(
+    parseInt(year, 10),
+    parseInt(month, 10) - 1,
+    parseInt(day, 10)
+  );
   // console.log(zemen.toEC(year, month, day));
 
-  return `${convertedDay}/${convertedMonth}/${convertedYear}`;
+  return `${convertedDay}/${convertedMonth + 1}/${convertedYear}`;
 };
 
 export const convertToGregorian = (year, month, day) => {
