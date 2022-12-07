@@ -29,7 +29,10 @@ export default () => {
     Route.get(
       '/:id',
       '/app/modules/academic/student/studentController.show'
-    ).middleware([getAuthGuard(), 'can:view-student']);
+    ).middleware([
+      getAuthGuard(),
+      // 'can:view-student'
+    ]);
 
     Route.post(
       '/show/:id',

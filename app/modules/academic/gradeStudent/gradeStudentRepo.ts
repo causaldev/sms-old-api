@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { Repo } from 'app/modules/_shared/repo';
 import { quarterMap } from 'app/modules/_shared/types';
 import AcademicYear from '../academicYear/academicYear';
@@ -51,7 +52,13 @@ export default class GradeStudentRepo extends Repo<GradeStudent> {
       .firstOrFail();
 
     const {
-      student: { first_name, father_name, grand_father_name, gender, age },
+      student: {
+        first_name,
+        father_name,
+        grand_father_name,
+        gender,
+        date_of_birth,
+      },
       grade,
       academicYear: { year },
     } = gs.serialize();
@@ -62,7 +69,7 @@ export default class GradeStudentRepo extends Repo<GradeStudent> {
       grade: grade.name,
       promotedTo: '',
       year,
-      age,
+      age: date_of_birth ? moment().diff(moment(date_of_birth), 'years') : '',
     };
   }
 
