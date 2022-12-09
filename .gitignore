@@ -17,3 +17,4 @@ temp.js
 out.json
 public/images/*
 !public/imgs/*
+temp*.json

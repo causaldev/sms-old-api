@@ -239,7 +239,7 @@ export const generateFrontTemplate = () => {
       </span>
       <span style="display: inline-block; font-weight: bold; font-size:0.85em;margin-right: 15px;">
       ____________to<span class="under"  style="display: inline-block; font-weight: bold;margin: 0px 10px;">${
-        promotionMap[student.grade] || '___________'
+        null || '___________'
       }</span>
       </span>
     </div>
@@ -267,3 +267,5 @@ export const generateFrontTemplate = () => {
 
   return frontReportTemplate;
 };
+
+// promotionMap[student.grade];
