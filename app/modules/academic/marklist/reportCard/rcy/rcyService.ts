@@ -143,6 +143,36 @@ export default class RcyService extends ReportCardService<Rcy> {
     return markMap;
   }
 
+  async getSemesterCstsAll(gradeId: string) {
+    const semesters = await Semester.query();
+    const rcsService = new RcsService();
+    const markMap: any = {};
+
+    for (let i = 0; i < semesters.length; i++) {
+      const { markAll: mark } = await rcsService.getCstMap(
+        gradeId,
+        semesters[i].id
+      );
+
+      Object.keys(mark).forEach((gsId) => {
+        if (markMap[gsId] === undefined) {
+          markMap[gsId] = {};
+        }
+
+        Object.keys(mark[gsId]).forEach((cstId) => {
+          if (markMap[gsId][cstId] === undefined) {
+            markMap[gsId][cstId] = {};
+          }
+          markMap[gsId][cstId][semesters[i].id] = mark[gsId][cstId];
+        });
+
+        //
+      });
+    }
+
+    return markMap;
+  }
+
   async getCstMap(gradeId: string) {
     const year = await AcademicYearService.getActive();
     const semesterIds = (await Semester.query()).map((s) => s.id);
@@ -165,6 +195,7 @@ export default class RcyService extends ReportCardService<Rcy> {
         qBuilder.orderBy('quarter', 'asc');
       });
     const semesterMarkMap = await this.getSemesterCsts(gradeId);
+    const semesterMarkMapAll = await this.getSemesterCstsAll(gradeId);
 
     const rcqMap = await this.fetchRcqs(quarterIds, gsIds);
     const rcsMap = await this.fetchRcss(semesterIds, gsIds);
@@ -180,11 +211,13 @@ export default class RcyService extends ReportCardService<Rcy> {
     return {
       csts,
       marklistMap,
+      marklistMapAll,
       mark,
       students,
       rcqs,
       semesters,
       semesterMarkMap,
+      semesterMarkMapAll,
       rcqMap,
       rcsMap,
       cstsAll,
@@ -205,11 +238,11 @@ export default class RcyService extends ReportCardService<Rcy> {
 
     const {
       cstsAll: csts,
-      marklistMap,
+      marklistMapAll: marklistMap,
       markAll: mark,
       students,
       semesters,
-      semesterMarkMap,
+      semesterMarkMapAll: semesterMarkMap,
       rcqMap,
       rcsMap,
     } = await this.getCstMap(gradeId);

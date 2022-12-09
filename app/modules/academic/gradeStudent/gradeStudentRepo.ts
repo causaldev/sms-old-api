@@ -35,8 +35,10 @@ export default class GradeStudentRepo extends Repo<GradeStudent> {
 
   async fetchGradeStudents(gradeId: string) {
     const year = await AcademicYear.getActiveYear();
-    const gradeStudents = await this.model
-      .query()
+    const gradeStudents = await GradeStudent.query()
+      .whereHas('student', (studentQuery) => {
+        studentQuery.where('status', 'Active');
+      })
       .where('active', true)
       .where('academic_year_id', year.id)
       .where('grade_id', gradeId);

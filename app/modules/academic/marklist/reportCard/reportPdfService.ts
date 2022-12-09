@@ -65,6 +65,13 @@ export default class ReportPdfService {
 
     const csts = cstQuery.map((item) => item.serialize());
 
+    // if (gsId === 'aefc2150-54fe-4ed0-8681-7c8fd2202a78') {
+    //   require('fs').writeFileSync(
+    //     `${__dirname}/sub.json`,
+    //     JSON.stringify(csts, null, 2)
+    //   );
+    // }
+
     const subMap = {};
 
     csts.forEach((cst) => {
@@ -76,14 +83,16 @@ export default class ReportPdfService {
         subMap[subject] = {};
       }
 
+      let totalScore = 0;
       evaluationMethods.forEach((em) => {
         const {
           quarter: { quarter },
           smls,
         } = em;
-        let totalScore = 0;
         if (smls.length) {
-          smls.forEach((sml) => (totalScore += sml.score));
+          smls.forEach((sml) => {
+            totalScore += sml.score;
+          });
           subMap[subject][quarterMap[quarter]] = totalScore;
         }
       });
@@ -149,6 +158,7 @@ export default class ReportPdfService {
   async fetchStudentData(gsId: string, subjects: string[]) {
     const quarterSubjects = await new RcqCstService().fetchFormattedData(gsId);
     const quarterNonRankSubs = await this.fetchNonRankQ(gsId);
+
     const quarterReport = this.rcqService.formatStudentReport(
       await this.rcqService.fetchStudentReport(gsId)
     );

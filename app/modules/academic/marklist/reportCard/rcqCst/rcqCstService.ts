@@ -12,7 +12,13 @@ export default class RcqCstService extends Service<RcqCst> {
     const data = await (this.repo as RcqCstRepo).fetchStudentMarks(
       gradeStudentId
     );
-    // console.log(JSON.stringify(data, null, 2));
+    if (gradeStudentId === 'aefc2150-54fe-4ed0-8681-7c8fd2202a78') {
+      // require('fs').writeFileSync(
+      //   `${__dirname}/sub.json`,
+      //   JSON.stringify(data, null, 2)
+      // );
+      // console.log(JSON.stringify(data, null, 2));
+    }
     return this.formatStudentData(data);
   }
 
