@@ -174,7 +174,7 @@ export const generateFrontTemplate = () => {
 </div>
   `;
 
-  const rightTemplate = (student, year, promotionMap) => `
+  const rightTemplate = (student, year, _promotionMap) => `
 
   <div class="holder">
   <div class="center-it head">
