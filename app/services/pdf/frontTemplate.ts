@@ -238,7 +238,7 @@ export const generateFrontTemplate = () => {
         ><span class="under"> ${student.grade}</span>
       </span>
       <span style="display: inline-block; font-weight: bold; font-size:0.85em;margin-right: 15px;">
-      ____________to<span class="under"  style="display: inline-block; font-weight: bold;margin: 0px 10px;"></span>
+      <span class="under"  style="display: inline-block; font-weight: bold;margin: 0px 10px;"></span>
       </span>
     </div>
   </div>
