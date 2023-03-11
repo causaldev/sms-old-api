@@ -43,5 +43,5 @@ Route.group(() => {
 Route.get('/img', '/app/core/imageController.image');
 
 Route.get('/version', () => {
-  return { version: '0.6.8' };
+  return { version: '0.6.9' };
 });
