@@ -44,7 +44,13 @@ const corsConfig: CorsConfig = {
   |                     one of the above values.
   |
   */
-  origin: '*',
+  origin: [
+    'http://localhost:3005',
+    'http://localhost:3005',
+    'http://sms-new.striversacademy.com',
+    'https://sms-new.striversacademy.com',
+  ],
+  // origin: '*',
 
   /*
   |--------------------------------------------------------------------------
