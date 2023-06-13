@@ -29,9 +29,9 @@ export default class AuthController {
       return { user };
     } catch (err) {
       console.log('auth err', err);
-      return response
-        .status(422)
-        .json({ errors: { email: 'Invalid Credential' } });
+      return response.status(422).json({
+        errors: { email: 'Invalid Credential', error: err.message, err },
+      });
     }
   }
 

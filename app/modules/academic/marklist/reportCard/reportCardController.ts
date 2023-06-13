@@ -39,8 +39,8 @@ export default class ReportCardController extends ApiController<Rc> {
 
     await Grade.findOrFail(gradeId);
 
-    // return pdfPath;
-    return response.stream(require('fs').createReadStream(htmlPath));
+    return response.download(htmlPath);
+    // return response.stream(require('fs').createReadStream(htmlPath));
     // return response.attachment(pdfPath as string);
   }
 
@@ -48,7 +48,8 @@ export default class ReportCardController extends ApiController<Rc> {
     const { gsId } = request.params();
     const pdfPath = await new ReportPdfService().generateStudentReportPdf(gsId);
 
-    return response.stream(require('fs').createReadStream(pdfPath));
+    return response.download(pdfPath);
+    // return response.stream(require('fs').createReadStream(pdfPath));
     // return response.attachment(pdfPath as string);
   }
 

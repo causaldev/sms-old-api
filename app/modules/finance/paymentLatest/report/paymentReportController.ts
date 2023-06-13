@@ -1,8 +1,12 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import FixedStudentPaymentReport from '../fixed/fixedStudentPayment/lib/fixedStudentPaymentReportService';
 import RecurrentStudentPaymentReportService from '../recurrent/recurrentStudentPayment/lib/recurrentStudentPaymentReportService';
+import RecurrentStudentPaymentService from '../recurrent/recurrentStudentPayment/lib/recurrentStudentPaymentService';
+import FixedStudentPaymentService from '../fixed/fixedStudentPayment/lib/fixedStudentPaymentService';
 
 export default class PaymentReportController {
+  constructor() {}
+
   async getReport({ request, response }: HttpContextContract) {
     const { start_date, end_date } = request.params();
 
@@ -13,5 +17,18 @@ export default class PaymentReportController {
     );
 
     response.json({ fixed, recurrent });
+  }
+
+  async getStudentPayments({ request, response }: HttpContextContract) {
+    const { id } = request.params();
+
+    const recurrent = await RecurrentStudentPaymentService.studentPayments(id);
+    const recurrentPending =
+      await RecurrentStudentPaymentService.studentPending(id);
+
+    const fixed = await FixedStudentPaymentService.studentPayments(id);
+    const fixedPending = await FixedStudentPaymentService.studentPending(id);
+
+    response.json({ fixedPending, recurrentPending, fixed, recurrent });
   }
 }

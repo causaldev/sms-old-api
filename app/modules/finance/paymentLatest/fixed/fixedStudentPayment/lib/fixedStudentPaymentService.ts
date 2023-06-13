@@ -81,6 +81,19 @@ const FixedStudentPaymentService = {
 
     return fixed !== null;
   },
+
+  studentPayments: async (studentId: string) => {
+    return FixedStudentPayment.query()
+      .where('student_id', studentId)
+      .preload('fixedPayment')
+      .preload('user');
+  },
+
+  studentPending: async (studentId: string) => {
+    return FixedPaymentPending.query()
+      .where('student_id', studentId)
+      .preload('fixedPayment');
+  },
 };
 
 export default FixedStudentPaymentService;

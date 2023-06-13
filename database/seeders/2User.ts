@@ -12,9 +12,9 @@ export default class UserSeeder extends BaseSeeder {
     await User.create({
       first_name: 'Super',
       father_name: 'Admin',
-      email: 'super-admin@m.com',
+      email: 'super@m.com',
       permissions: JSON.stringify(roles),
-      password: 'secret',
+      password: 'Secret1##',
     });
     // await UserFactory.merge({
     //   email: 'super-admin@m.com',

@@ -73,6 +73,21 @@ const RecurrentStudentPaymentService = {
 
     return payment !== null;
   },
+
+  studentPayments: async (studentId: string) => {
+    return RecurrentStudentPayment.query()
+      .where('student_id', studentId)
+      .preload('user')
+      .preload('recurrentPaymentChild')
+      .preload('recurrentPayment');
+  },
+
+  studentPending: async (studentId: string) => {
+    return RecurrentPaymentPending.query()
+      .where('student_id', studentId)
+      .preload('recurrentPayment')
+      .preload('recurrentPaymentChild');
+  },
 };
 
 export default RecurrentStudentPaymentService;
