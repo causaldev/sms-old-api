@@ -94,6 +94,25 @@ const FixedStudentPaymentService = {
       .where('student_id', studentId)
       .preload('fixedPayment');
   },
+
+  attachmentRange: (start: string, end: string) => {
+    return FixedStudentPayment.query()
+      .where('attachment', '>=', start)
+      .where('attachment', '<=', end)
+      .preload('fixedPayment', (payment) => {
+        payment.select('id', 'amount', 'description');
+      })
+      .preload('student', (student) => {
+        student.select('id', 'first_name', 'father_name');
+      })
+      .preload('user', (user) => {
+        user.select('id', 'first_name', 'father_name');
+      })
+      .preload('grade', (grade) => {
+        grade.select('name');
+      })
+      .orderBy('attachment');
+  },
 };
 
 export default FixedStudentPaymentService;

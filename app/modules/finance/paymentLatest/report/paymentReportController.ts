@@ -3,6 +3,7 @@ import FixedStudentPaymentReport from '../fixed/fixedStudentPayment/lib/fixedStu
 import RecurrentStudentPaymentReportService from '../recurrent/recurrentStudentPayment/lib/recurrentStudentPaymentReportService';
 import RecurrentStudentPaymentService from '../recurrent/recurrentStudentPayment/lib/recurrentStudentPaymentService';
 import FixedStudentPaymentService from '../fixed/fixedStudentPayment/lib/fixedStudentPaymentService';
+import paymentService from '../lib/payment-service';
 
 export default class PaymentReportController {
   constructor() {}
@@ -30,5 +31,14 @@ export default class PaymentReportController {
     const fixedPending = await FixedStudentPaymentService.studentPending(id);
 
     response.json({ fixedPending, recurrentPending, fixed, recurrent });
+  }
+
+  async getAttachmentPayments({ request, response }: HttpContextContract) {
+    const { start, end } = request.params();
+
+    const payment = await paymentService.getAttachmentReport(start, end);
+    const parsed = paymentService.analyzeAttachment(payment);
+
+    response.json(parsed);
   }
 }

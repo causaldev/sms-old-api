@@ -10,6 +10,13 @@ export default () => {
 
   Route.group(() => {
     Route.get(
+      '/attachment-payments/:start/:end',
+      '/app/modules/finance/paymentLatest/report/paymentReportController.getAttachmentPayments'
+    ).prefix('/reports');
+  });
+
+  Route.group(() => {
+    Route.get(
       '/:start_date/:end_date',
       '/app/modules/finance/paymentLatest/report/paymentReportController.getReport'
     );

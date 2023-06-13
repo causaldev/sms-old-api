@@ -88,6 +88,27 @@ const RecurrentStudentPaymentService = {
       .preload('recurrentPayment')
       .preload('recurrentPaymentChild');
   },
+
+  attachmentRange: (start: string, end: string) => {
+    return RecurrentStudentPayment.query()
+      .where('attachment', '>=', start)
+      .where('attachment', '<=', end)
+      .preload('recurrentPaymentChild', (child) => {
+        child.select('id', 'amount', 'description');
+      })
+      .preload('recurrentPayment', (payment) => {
+        payment.select('id', 'description');
+      })
+      .preload('student', (student) => {
+        student.select('id', 'first_name', 'father_name');
+      })
+      .preload('grade', (grade) => {
+        grade.select('name');
+      })
+      .preload('user', (user) => {
+        user.select('id', 'first_name', 'father_name');
+      });
+  },
 };
 
 export default RecurrentStudentPaymentService;
