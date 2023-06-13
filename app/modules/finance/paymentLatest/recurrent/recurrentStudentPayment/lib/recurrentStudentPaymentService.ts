@@ -89,8 +89,9 @@ const RecurrentStudentPaymentService = {
       .preload('recurrentPaymentChild');
   },
 
-  attachmentRange: (start: string, end: string) => {
+  attachmentRange: (start: number, end: number) => {
     return RecurrentStudentPayment.query()
+      .orderBy('attachment')
       .where('attachment', '>=', start)
       .where('attachment', '<=', end)
       .preload('recurrentPaymentChild', (child) => {

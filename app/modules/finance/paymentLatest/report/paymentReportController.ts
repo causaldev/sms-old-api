@@ -37,7 +37,7 @@ export default class PaymentReportController {
     const { start, end } = request.params();
 
     const payment = await paymentService.getAttachmentReport(start, end);
-    const parsed = paymentService.analyzeAttachment(payment);
+    const parsed = paymentService.analyzeAttachment(parseInt(start), payment);
 
     response.json(parsed);
   }

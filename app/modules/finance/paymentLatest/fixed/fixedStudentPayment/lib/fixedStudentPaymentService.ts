@@ -95,8 +95,9 @@ const FixedStudentPaymentService = {
       .preload('fixedPayment');
   },
 
-  attachmentRange: (start: string, end: string) => {
+  attachmentRange: (start: number, end: number) => {
     return FixedStudentPayment.query()
+      .orderBy('attachment')
       .where('attachment', '>=', start)
       .where('attachment', '<=', end)
       .preload('fixedPayment', (payment) => {
@@ -110,8 +111,7 @@ const FixedStudentPaymentService = {
       })
       .preload('grade', (grade) => {
         grade.select('name');
-      })
-      .orderBy('attachment');
+      });
   },
 };
 
