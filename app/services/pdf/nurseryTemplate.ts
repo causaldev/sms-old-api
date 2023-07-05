@@ -580,10 +580,10 @@ export default ({
             "
           >
             <div>
-              <p style="margin-bottom: 15px;">A = 90% - 100%</p>
-              <p style="margin-bottom: 15px;">B = 80% - 89%</p>
-              <p style="margin-bottom: 15px;">C = 70% - 79%</p>
-              <p style="margin-bottom: 15px;">N &le; 70% Needs Improvement</p>
+              <p style="margin-bottom: 15px;">A = 85% - 100%</p>
+              <p style="margin-bottom: 15px;">B = 70% - 84%</p>
+              <p style="margin-bottom: 15px;">C = 55% - 69%</p>
+              <p style="margin-bottom: 15px;">P &le; 540% Poor</p>
             </div>
             <div>
               <img src="${plogo4}" />

@@ -38,13 +38,13 @@ export const formatNursery = (mark) => {
     return '-';
   }
 
-  if (mark >= 90) {
+  if (mark >= 85) {
     return 'A';
-  } else if (mark >= 80) {
-    return 'B';
   } else if (mark >= 70) {
+    return 'B';
+  } else if (mark >= 55) {
     return 'C';
   }
 
-  return 'N';
+  return 'P';
 };
