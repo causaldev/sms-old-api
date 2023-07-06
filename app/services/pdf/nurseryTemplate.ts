@@ -48,34 +48,10 @@ export default ({
         ({ subject, display_mode, display_rules }) => `
       <tr>
         <td>${subject}</td>
-        <td>${
-          formatMark(
-            marklist?.subjects[subject]?.q1,
-            display_mode,
-            display_rules
-          ) || ''
-        }</td>
-        <td>${
-          formatMark(
-            marklist?.subjects[subject]?.q2,
-            display_mode,
-            display_rules
-          ) || ''
-        }</td>
-        <td>${
-          formatMark(
-            marklist?.subjects[subject]?.q3,
-            display_mode,
-            display_rules
-          ) || ''
-        }</td>
-        <td>${
-          formatMark(
-            marklist?.subjects[subject]?.q4,
-            display_mode,
-            display_rules
-          ) || ''
-        }</td>
+        <td>${formatNursery(marklist?.subjects[subject]?.q1) || ''}</td>
+        <td>${formatNursery(marklist?.subjects[subject]?.q2) || ''}</td>
+        <td>${formatNursery(marklist?.subjects[subject]?.q3) || ''}</td>
+        <td>${formatNursery(marklist?.subjects[subject]?.q4) || ''}</td>
       </tr>
   `
       )
@@ -583,7 +559,7 @@ export default ({
               <p style="margin-bottom: 15px;">A = 85% - 100%</p>
               <p style="margin-bottom: 15px;">B = 70% - 84%</p>
               <p style="margin-bottom: 15px;">C = 55% - 69%</p>
-              <p style="margin-bottom: 15px;">P &le; 540% Poor</p>
+              <p style="margin-bottom: 15px;">P &le; 54% Poor</p>
             </div>
             <div>
               <img src="${plogo4}" />
