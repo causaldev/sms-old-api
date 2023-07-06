@@ -2,7 +2,7 @@ import { DisplayRule } from 'app/modules/academic/marklist/subject/subject';
 import NurserySkill from 'app/modules/academic/student/nurserySkill/nurserySkill';
 import fs from 'fs';
 import Application from '@ioc:Adonis/Core/Application';
-import { formatMark, formatNursery } from './report-utils';
+import { formatNursery } from './report-utils';
 
 const plogo1 = `data:image/png;base64,${fs.readFileSync(
   Application.publicPath('/imgs/plogo1.png'),
@@ -45,7 +45,7 @@ export default ({
   const generateReportTable = () => {
     return subjects
       .map(
-        ({ subject, display_mode, display_rules }) => `
+        ({ subject }) => `
       <tr>
         <td>${subject}</td>
         <td>${formatNursery(marklist?.subjects[subject]?.q1) || ''}</td>
