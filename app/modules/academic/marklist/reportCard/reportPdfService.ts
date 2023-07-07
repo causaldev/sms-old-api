@@ -58,9 +58,12 @@ export default class ReportPdfService {
         });
       })
       .preload('evaluationMethods', (emBuilder) => {
-        emBuilder.preload('quarter').preload('smls', (smlBuilder) => {
-          smlBuilder.where('grade_student_id', gsId);
-        });
+        emBuilder
+          .preload('quarter')
+          .preload('smls', (smlBuilder) => {
+            smlBuilder.where('grade_student_id', gsId);
+          })
+          .preload('evaluationType');
       })
       .preload('subject');
 
@@ -74,6 +77,10 @@ export default class ReportPdfService {
     // }
 
     const subMap = {};
+    // require('fs').writeFileSync(
+    //   `${__dirname}/csv.json`,
+    //   JSON.stringify(csts, null, 2)
+    // );
 
     csts.forEach((cst) => {
       const {
@@ -84,22 +91,31 @@ export default class ReportPdfService {
         subMap[subject] = {};
       }
 
-      let totalScore = 0;
       evaluationMethods.forEach((em) => {
         const {
           quarter: { quarter },
           smls,
         } = em;
+        let totalScore = 0;
+        if (subMap[subject][quarterMap[quarter]] === undefined) {
+          subMap[subject][quarterMap[quarter]] = 0;
+        }
+
         if (smls.length) {
           smls.forEach((sml) => {
             totalScore += sml.score;
           });
-          subMap[subject][quarterMap[quarter]] = totalScore;
+          subMap[subject][quarterMap[quarter]] += totalScore;
         }
       });
     });
 
     const year = (await AcademicYear.getActiveYear()).year;
+
+    // require('fs').writeFileSync(
+    //   `${__dirname}/submap.json`,
+    //   JSON.stringify(subMap, null, 2)
+    // );
 
     Object.keys(subMap).forEach((subject) => {
       const { q1, q2, q3, q4 } = subMap[subject];
@@ -231,6 +247,7 @@ export default class ReportPdfService {
   async generateStudentReportPdf(gsId: string) {
     const gradeStudent = await this.gsService.findOne(gsId);
     const data = await this.fetchStudentsReport([gsId]);
+
     const pdfPath = await generateHtmlReport(
       gradeStudent.grade_id,
       data,
