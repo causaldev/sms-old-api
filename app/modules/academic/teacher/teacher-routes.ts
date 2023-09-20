@@ -17,5 +17,10 @@ export default () => {
       '/',
       '/app/modules/academic/teacher/teacher-controller.index'
     ).middleware([getAuthGuard(), 'can:add-teacher']);
+
+    Route.post(
+      '/search',
+      '/app/modules/academic/teacher/teacher-controller.index'
+    ).middleware([getAuthGuard(), 'can:add-teacher']);
   }).prefix('teachers');
 };
