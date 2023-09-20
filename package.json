@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "builder": "node ace build --production",
+    "build": "node ace build --production && cp .env build && cd build && npm ci --production",
     "start": "node server.js",
     "dev": "node ace serve --watch",
     "lint": "eslint . --ext=.ts",
