@@ -5,6 +5,7 @@ import paymentRoutes from 'app/modules/finance/payment/paymentRoutes';
 import paymentLatestRoute from 'app/modules/finance/paymentLatest/paymentLatestRoute';
 import paymentNewRoutes from 'app/modules/finance/paymentNew/paymentNewRoutes';
 import hrRoutes from 'app/modules/hr/hrRoutes';
+import textMessageRoute from 'app/modules/textMessages/textMessageRoute';
 import userRoutes from 'app/modules/user/userRoutes';
 import { getAuthGuard } from 'app/services/utils';
 
@@ -22,6 +23,8 @@ Route.group(() => {
   hrRoutes();
 
   userRoutes();
+
+  textMessageRoute();
 
   Route.get(
     'global',
