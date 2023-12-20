@@ -49,11 +49,11 @@ const StudentAttendanceService = {
         .where('msg_sent', false)
     ) as any;
 
-    // StudentAttendance.query()
-    //   .update({
-    //     msg_sent: true,
-    //   })
-    //   .then(() => {});
+    StudentAttendance.query()
+      .update({
+        msg_sent: true,
+      })
+      .then(() => {});
 
     const mapped = attendances.map((attendance) => ({
       ...attendance,
