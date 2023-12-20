@@ -3,9 +3,14 @@ import { getAuthGuard } from 'app/services/utils';
 
 export default () => {
   Route.group(() => {
+    Route.post(
+      '/',
+      '/app/modules/textMessages/textMessageController.create'
+    ).middleware([]);
+
     Route.get(
-      '/non-sent',
-      '/app/modules/textMessages/textMessageController.getNonSent'
+      '/',
+      '/app/modules/textMessages/textMessageController.index'
     ).middleware([]);
   })
     .prefix('/text-messages')

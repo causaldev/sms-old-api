@@ -13,6 +13,7 @@ export default class TextMessages extends BaseSchema {
       table.string('phone').notNullable();
       table.string('parent_resource_id');
       table.string('msg_type');
+      table.text('msg_tags');
 
       table.timestamps(true, true);
     });

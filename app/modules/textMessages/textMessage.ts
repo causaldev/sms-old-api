@@ -3,7 +3,7 @@ import Model from '../_shared/model';
 
 export default class TextMessage extends Model {
   @column()
-  public remark: string;
+  public message: string;
 
   @column()
   public entity_id: string;
@@ -17,6 +17,9 @@ export default class TextMessage extends Model {
   @column({})
   public msg_type: string | null;
 
-  @column()
+  @column({ serialize: (val) => Boolean(val) })
   public msg_sent: boolean;
+
+  @column({ serialize: (val) => JSON.parse(val || '[]') })
+  public msg_tags: string | null;
 }
