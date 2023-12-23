@@ -40,7 +40,7 @@ export const TextMessageService = {
       const actions = data.data.map((item) =>
         TextMessage.updateOrCreate(
           { entity_id: item.entity_id },
-          { ...item, msg_tags: JSON.stringify(item.msg_tags) },
+          { ...item, msg_tags: JSON.stringify(item.msg_tags), msg_sent: false },
           { client: trx }
         )
       );
