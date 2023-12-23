@@ -2,6 +2,7 @@ import Service from 'app/modules/_shared/service';
 import SubjectService from '../marklist/subject/subjectService';
 import Grade from './grade';
 import GradeRepo from './gradeRepo';
+import AcademicYear from '../academicYear/academicYear';
 
 export default class GradeService extends Service<Grade> {
   constructor(protected subjectService = new SubjectService()) {
@@ -18,5 +19,12 @@ export default class GradeService extends Service<Grade> {
     const grade = await Grade.findOrFail(gradeId);
 
     return this.subjectService.getSubjectsByReport(grade.report_card_template);
+  }
+
+  async getGradeWithStudents() {
+    const activeYear = await AcademicYear.getActiveYear();
+    return Grade.query().preload('gradeStudents', (gs) => {
+      gs.where('academic_year_id', activeYear.id).preload('student');
+    });
   }
 }

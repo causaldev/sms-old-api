@@ -1,3 +1,4 @@
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import ApiController from 'app/modules/_shared/apiController';
 import Grade from './grade';
 import GradeService from './gradeService';
@@ -10,5 +11,11 @@ export default class GradeController extends ApiController<Grade> {
       createValidator: CGradeVal,
       editValidator: EGradeVal,
     });
+  }
+
+  async gradeWithStudents({ response }: HttpContextContract) {
+    const grades = await this.service.getGradeWithStudents();
+
+    response.json({ data: grades });
   }
 }

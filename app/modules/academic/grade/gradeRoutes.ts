@@ -14,6 +14,11 @@ export default () => {
     ).middleware([getAuthGuard(), 'can:view-grade']);
 
     Route.get(
+      '/with-students',
+      '/app/modules/academic/grade/gradeController.gradeWithStudents'
+    ).middleware([getAuthGuard(), 'can:view-grade']);
+
+    Route.get(
       '/',
       '/app/modules/academic/grade/gradeController.index'
     ).middleware([getAuthGuard(), 'can:view-grade']);
