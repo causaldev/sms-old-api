@@ -27,7 +27,7 @@ export default class GradeService extends Service<Grade> {
       gs.where('academic_year_id', activeYear.id).preload(
         'student',
         (studentQuery) => {
-          studentQuery.where('active', 'Active');
+          studentQuery.where('status', 'Active');
         }
       );
     });
