@@ -24,7 +24,12 @@ export default class GradeService extends Service<Grade> {
   async getGradeWithStudents() {
     const activeYear = await AcademicYear.getActiveYear();
     return Grade.query().preload('gradeStudents', (gs) => {
-      gs.where('academic_year_id', activeYear.id).preload('student');
+      gs.where('academic_year_id', activeYear.id).preload(
+        'student',
+        (studentQuery) => {
+          studentQuery.where('active', 'Active');
+        }
+      );
     });
   }
 }
