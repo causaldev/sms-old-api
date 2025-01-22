@@ -7,7 +7,7 @@ export default class Others extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').unique().primary();
 
-      table.text('reason').notNullable().index();
+      table.text('reason').notNullable();
       table
         .uuid('payment_id')
         .notNullable()

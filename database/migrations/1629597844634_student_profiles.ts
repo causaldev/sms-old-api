@@ -12,7 +12,7 @@ export default class StudentProfiles extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').unique().primary();
 
-      table.string('nationality').index();
+      table.string('nationality');
       table.string('address_city');
       table.string('address_sub_city');
       table.string('address_woreda');
@@ -25,7 +25,7 @@ export default class StudentProfiles extends BaseSchema {
       table.string('previous_school_woreda');
       table.string('school_leave_other');
       table.string('entry_class');
-      table.string('parent_name').index();
+      table.string('parent_name');
       table.string('occupation');
       table.string('work_place');
       table.string('parent_phone_number');

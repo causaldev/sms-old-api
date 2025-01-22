@@ -7,7 +7,7 @@ export default class Subjects extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').unique().primary();
 
-      table.string('subject').notNullable().unique().index();
+      table.string('subject').notNullable().unique();
       table.string('code').notNullable().unique();
       table.boolean('consider_for_rank').notNullable().defaultTo(true);
 
