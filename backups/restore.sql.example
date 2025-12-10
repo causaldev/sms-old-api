@@ -1,0 +1,9 @@
+-- Example MySQL dump
+-- Save your dump as backups/restore.sql (or any path under backups/)
+-- Then run: scripts/db-restore.sh backups/restore.sql
+
+-- Example content (replace with your dump)
+-- CREATE TABLE example (id int primary key, name varchar(50));
+-- INSERT INTO example (id, name) VALUES (1, 'hello');
+
+

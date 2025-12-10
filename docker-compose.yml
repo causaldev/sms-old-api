@@ -1,0 +1,90 @@
+version: '3.9'
+
+services:
+  api:
+    build: .
+    container_name: sms-api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 3333
+      APP_NAME: sms-api
+      # Generate a strong key (example placeholder below)
+      APP_KEY: 'base64:CHANGE_ME_TO_A_SECURE_KEY'
+      DB_CONNECTION: mysql
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_USER: sms
+      MYSQL_PASSWORD: sms
+      MYSQL_DB_NAME: sms
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - '3333:3333'
+
+  db:
+    image: mysql:8.0
+    container_name: sms-mysql
+    restart: unless-stopped
+    command:
+      [
+        '--default-authentication-plugin=mysql_native_password',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
+      ]
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sms
+      MYSQL_USER: sms
+      MYSQL_PASSWORD: sms
+    # No host port published to avoid conflicts with existing MySQL on host.
+    # Access from host is not required; api connects via internal service name `db`.
+    volumes:
+      - db_data:/var/lib/mysql
+      # Place any .sql/.sql.gz/.sh in ./backups/init to auto-run on first DB init
+      - ./backups/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test:
+        ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 -uroot -proot || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  adminer:
+    image: adminer:latest
+    container_name: sms-adminer
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db-restore:
+    image: mysql:8.0
+    container_name: sms-db-restore
+    profiles:
+      - restore
+    restart: 'no'
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sms
+    volumes:
+      - ./backups:/backups:ro
+    entrypoint:
+      - sh
+      - -lc
+      - >
+        FILE="${BACKUP_FILE:-/backups/restore.sql}";
+        if [ ! -f "$FILE" ]; then echo "Backup file not found: $FILE"; exit 1; fi;
+        echo "Restoring $FILE into $${MYSQL_DATABASE}...";
+        mysql -h db -uroot -p"$${MYSQL_ROOT_PASSWORD}" "$${MYSQL_DATABASE}" < "$FILE" &&
+        echo "Restore complete."
+
+volumes:
+  db_data:
