@@ -6,7 +6,8 @@ export default class GsActivenesses extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').unique().primary();
-      table.collate('utf8_unicode_ci');
+      // Match restored dump charset/collation (avoids FK incompatibility with existing utf8mb3 tables)
+      table.collate('utf8mb3_unicode_ci');
 
       table
         .uuid('grade_id')
